@@ -63,9 +63,3 @@ services:
     dockerContext: ./menu-service
     dockerfilePath: ./menu-service/Dockerfile
     plan: free
-
-  - name: redis
-    type: worker
-    env: docker
-    dockerContext: ./redis
-    dockerfilePath: ./redis/Dockerfile
