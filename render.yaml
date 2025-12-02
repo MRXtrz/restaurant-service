@@ -25,7 +25,7 @@ services:
     plan: free
     envVars:
       - key: REDIS_URL
-        value: redis://redis:6379
+        value: redis://red-d4n6som3jp1c73af5q30:6379
 
   - name: order-service
     type: web
@@ -35,7 +35,7 @@ services:
     plan: free
     envVars:
       - key: REDIS_URL
-        value: redis://redis:6379
+        value: redis://red-d4n6som3jp1c73af5q30:6379
 
   - name: table-service
     type: web
@@ -45,7 +45,7 @@ services:
     plan: free
     envVars:
       - key: REDIS_URL
-        value: redis://redis:6379
+        value: redis://red-d4n6som3jp1c73af5q30:6379
 
   - name: notification-service
     type: web
@@ -55,7 +55,7 @@ services:
     plan: free
     envVars:
       - key: REDIS_URL
-        value: redis://redis:6379
+        value: redis://red-d4n6som3jp1c73af5q30:6379
 
   - name: menu-service
     type: web
@@ -67,4 +67,5 @@ services:
   - name: redis
     type: worker
     env: docker
-    image: redis:7-alpine
+    dockerContext: ./redis
+    dockerfilePath: ./redis/Dockerfile
