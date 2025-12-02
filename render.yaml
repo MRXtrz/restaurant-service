@@ -1,78 +1,62 @@
-version: '3.8'
 services:
-  api-gateway:
-    build: ./api-gateway
-    ports:
-      - "8100:8000"
-    environment:
-      - AUTH_SERVICE_URL=http://auth-service:8001
-      - ORDER_SERVICE_URL=http://order-service:8002
-      - TABLE_SERVICE_URL=http://table-service:8003
-      - NOTIFICATION_SERVICE_URL=http://notification-service:8004
-      - MENU_SERVICE_URL=http://menu-service:8005
-    depends_on:
-      - auth-service
-      - order-service
-      - table-service
-      - notification-service
-      - menu-service
-    networks:
-      - restaurant-network
 
-  auth-service:
-    build: ./auth-service
-    ports:
-      - "8101:8001"
-    environment:
-      - REDIS_URL=redis://redis:6379
-    depends_on:
-      - redis
-    networks:
-      - restaurant-network
+  - name: api-gateway
+    type: web
+    env: docker
+    dockerContext: ./api-gateway
+    dockerfilePath: ./api-gateway/Dockerfile
+    plan: free
+    envVars:
+      AUTH_SERVICE_URL: http://auth-service:1001
+      ORDER_SERVICE_URL: http://order-service:1002
+      TABLE_SERVICE_URL: http://table-service:1003
+      NOTIFICATION_SERVICE_URL: http://notification-service:1004
+      MENU_SERVICE_URL: http://menu-service:1005
 
-  order-service:
-    build: ./order-service
-    ports:
-      - "8102:8002"
-    environment:
-      - REDIS_URL=redis://redis:6379
-    depends_on:
-      - redis
-    networks:
-      - restaurant-network
-  table-service:
-    build: ./table-service
-    ports:
-      - "8103:8003"
-    environment:
-      - REDIS_URL=redis://redis:6379
-    depends_on:
-      - redis
-    networks:
-      - restaurant-network
-  notification-service:
-    build: ./notification-service
-    ports:
-      - "8104:8004"
-    environment:
-      - REDIS_URL=redis://redis:6379
-    depends_on:
-      - redis
-    networks:
-      - restaurant-network
-  menu-service:
-    build: ./menu-service
-    ports:
-      - "8105:8005"
-    networks:
-      - restaurant-network
-  redis:
+  - name: auth-service
+    type: web
+    env: docker
+    dockerContext: ./auth-service
+    dockerfilePath: ./auth-service/Dockerfile
+    plan: free
+    envVars:
+      REDIS_URL: redis://redis:6379
+
+  - name: order-service
+    type: web
+    env: docker
+    dockerContext: ./order-service
+    dockerfilePath: ./order-service/Dockerfile
+    plan: free
+    envVars:
+      REDIS_URL: redis://redis:6379
+
+  - name: table-service
+    type: web
+    env: docker
+    dockerContext: ./table-service
+    dockerfilePath: ./table-service/Dockerfile
+    plan: free
+    envVars:
+      REDIS_URL: redis://redis:6379
+
+  - name: notification-service
+    type: web
+    env: docker
+    dockerContext: ./notification-service
+    dockerfilePath: ./notification-service/Dockerfile
+    plan: free
+    envVars:
+      REDIS_URL: redis://redis:6379
+
+  - name: menu-service
+    type: web
+    env: docker
+    dockerContext: ./menu-service
+    dockerfilePath: ./menu-service/Dockerfile
+    plan: free
+
+  - name: redis
+    type: worker
+    env: docker
     image: redis:7-alpine
-    ports:
-      - "6381:6379"
-    networks:
-      - restaurant-network
-
-networks:
-  restaurant-network:
-    driver: bridge
