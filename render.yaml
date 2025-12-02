@@ -1,5 +1,4 @@
 services:
-
   - name: api-gateway
     type: web
     env: docker
@@ -7,11 +6,16 @@ services:
     dockerfilePath: ./api-gateway/Dockerfile
     plan: free
     envVars:
-      AUTH_SERVICE_URL: http://auth-service:1001
-      ORDER_SERVICE_URL: http://order-service:1002
-      TABLE_SERVICE_URL: http://table-service:1003
-      NOTIFICATION_SERVICE_URL: http://notification-service:1004
-      MENU_SERVICE_URL: http://menu-service:1005
+      - key: AUTH_SERVICE_URL
+        value: http://auth-service:1001
+      - key: ORDER_SERVICE_URL
+        value: http://order-service:1002
+      - key: TABLE_SERVICE_URL
+        value: http://table-service:1003
+      - key: NOTIFICATION_SERVICE_URL
+        value: http://notification-service:1004
+      - key: MENU_SERVICE_URL
+        value: http://menu-service:1005
 
   - name: auth-service
     type: web
@@ -20,7 +24,8 @@ services:
     dockerfilePath: ./auth-service/Dockerfile
     plan: free
     envVars:
-      REDIS_URL: redis://redis:6379
+      - key: REDIS_URL
+        value: redis://redis:6379
 
   - name: order-service
     type: web
@@ -29,7 +34,8 @@ services:
     dockerfilePath: ./order-service/Dockerfile
     plan: free
     envVars:
-      REDIS_URL: redis://redis:6379
+      - key: REDIS_URL
+        value: redis://redis:6379
 
   - name: table-service
     type: web
@@ -38,7 +44,8 @@ services:
     dockerfilePath: ./table-service/Dockerfile
     plan: free
     envVars:
-      REDIS_URL: redis://redis:6379
+      - key: REDIS_URL
+        value: redis://redis:6379
 
   - name: notification-service
     type: web
@@ -47,7 +54,8 @@ services:
     dockerfilePath: ./notification-service/Dockerfile
     plan: free
     envVars:
-      REDIS_URL: redis://redis:6379
+      - key: REDIS_URL
+        value: redis://redis:6379
 
   - name: menu-service
     type: web
