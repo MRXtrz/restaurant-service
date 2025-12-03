@@ -9,7 +9,7 @@ app = FastAPI()
 class Dish(BaseModel):
     id: int
     name: str
-    price: float
+    price: str
     description: str
     category: str
     available: bool = True
